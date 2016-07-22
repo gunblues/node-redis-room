@@ -1,0 +1,36 @@
+{
+  "name": "node-redis-room" ,
+  "version": "0.0.1"             ,
+
+  "author": {
+    "name": "gunblues"          ,
+    "email": "hsiao.powen@gmail.com"
+  },
+
+  "description": "Redis Room for Node",
+
+  "keywords": [
+    "redis",
+    "room",
+    "pubsub",
+    "node",
+    "simple"
+  ],
+
+  "homepage" : "https://github.com/gunblues/node-redis-room",
+
+  "dependencies" : {
+    "async": "1.5.2",
+    "debug": "2.2.0"
+  },
+
+  "devDependencies": {
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gunblues/node-redis-room"
+  },
+
+  "licence": "MIT"
+}
