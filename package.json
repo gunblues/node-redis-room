@@ -1,6 +1,6 @@
 {
   "name": "node-redis-room",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Redis Room for Node",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,10 @@
     "type": "git",
     "url": "git://github.com/gunblues/node-redis-room"
   },
+  "dependencies": {
+    "debug": "2.2.0",
+    "async": "2.0.1"
+  }
   "author": "Gunblues <hsiao.powen@gmail.com> (http://gunblues.com)",
   "license": "MIT"
 }
