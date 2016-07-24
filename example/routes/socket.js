@@ -1,12 +1,12 @@
 var debug = require('debug')('nodeRedisRoomExample'),
   async = require('async'),
   redis = require('redis'),
-  nodeRedisRoom = require('node-redis-room').nodeRedisRoom();
+  nodeRedisRoom = require('node-redis-room');
 
   var crud = redis.createClient();
   var sub = redis.createClient();
   var pub = redis.createClient();
-  
+
   nodeRedisRoom.init(crud, sub, pub, function(channel, message) {
     io.in(channel).emit(message.cmd, message.content);
   });

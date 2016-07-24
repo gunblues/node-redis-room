@@ -1,6 +1,6 @@
 {
   "name": "node-redis-room",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Redis Room for Node",
   "main": "index.js",
   "scripts": {
