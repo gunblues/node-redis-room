@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "debug": "2.2.0",
-    "async": "2.0.1"
+    "async": "1.5.2"
   },
   "author": "Gunblues <hsiao.powen@gmail.com> (http://gunblues.com)",
   "license": "MIT"
