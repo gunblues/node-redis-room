@@ -48,15 +48,15 @@ var socketGo = (function() {
   });
 
   socket.on('join', function (data) {
-    console.log(data);
+    console.log('got join', data);
   });
 
   socket.on('leave', function (data) {
-    console.log(data);
+    console.log('got leave', data);
   });
 
   socket.on('broadcast', function (data) {
-    console.log(data);
+    console.log('got broadcast', data);
   });
 
   var disconnect = function() {

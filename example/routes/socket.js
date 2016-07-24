@@ -8,6 +8,7 @@ var debug = require('debug')('nodeRedisRoomExample'),
   var pub = redis.createClient();
 
   nodeRedisRoom.init(crud, sub, pub, function(channel, message) {
+    debug("io emit %o %o", channel, message);
     io.in(channel).emit(message.cmd, message.content);
   });
 
@@ -33,7 +34,7 @@ module.exports = function (socket) {
             cb(err);
           } else {
             debug("user socket.join success %o", user, data);
-            cb(null);
+            cb();
           }
         });
       },  
@@ -43,9 +44,16 @@ module.exports = function (socket) {
             cb(err);
           } else {
             debug("user nodeRedisRoom.join success %o", user);
-            cb(null);
+            cb();
           }
         });  
+      }],
+      broadcast: ['redisRoom', function(cb, results) {
+        nodeRedisRoom.broadcast(data.roomName, {
+          cmd: 'join',
+          content: nodeRedisRoomUser
+        });
+        cb();
       }],
     }, function final(err) {
       if (err) {
@@ -64,7 +72,7 @@ module.exports = function (socket) {
             cb(err);
           } else {
             debug("user socket.leave success %o", user, data);
-            cb(null);
+            cb();
           }
         });
       },  
@@ -74,9 +82,16 @@ module.exports = function (socket) {
             cb(err);
           } else {
             debug("user nodeRedisRoom.leave success %o", user);
-            cb(null);
+            cb();
           }
         });  
+      }],
+      broadcast: ['redisRoom', function(cb, results) {
+        nodeRedisRoom.broadcast(data.roomName, {
+          cmd: 'leave',
+          content: nodeRedisRoomUser
+        });
+        cb();
       }],
     }, function final(err) {
       if (err) {
@@ -85,9 +100,45 @@ module.exports = function (socket) {
     });
   });
 
+  socket.on('broadcast', function (data) {
+    debug("user broadcast %o %o", user, data);
+ 
+    nodeRedisRoom.broadcast(data.roomName, {
+      cmd: 'broadcast',
+      content: data.message 
+    });
+
+  });
+
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
     debug("user disconnected %o", user);
-    nodeRedisRoom.onDisconnect(nodeRedisRoomUser, function() {});
+
+    async.auto({
+      leave_room: function (cb) {
+        nodeRedisRoom.getUserHaveJoinedRooms(socket.id, function(err, rooms) {
+          if (err) {
+            cb(err);
+            return;
+          } 
+
+          rooms.forEach(function(room) {
+            nodeRedisRoom.broadcast(room, {
+              cmd: 'leave',
+              content: nodeRedisRoomUser
+            });
+          });
+        });
+      },
+      redisRoom: ['leave_room', function (cb) {
+        nodeRedisRoom.onDisconnect(nodeRedisRoomUser, function() {
+          cb();
+        });
+      }],
+    }, function final(err) {
+      if (err) {
+        console.error('leave failed', err);
+      }
+    });
   });
 };
