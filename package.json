@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git://github.com/gunblues/node-redis-room"
   },
-  "keywords":["node","socket.io","room","redis","cluster","multi node"]
+  "keywords":["node","socket.io","room","redis","cluster","multi node"],
   "dependencies": {
     "debug": "2.2.0",
     "async": "1.5.2"
