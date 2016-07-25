@@ -2,9 +2,9 @@
 Use Rooms and Namespaces of Socket.IO across nodes
 
 Rooms and Namespaces of Socket.IO is very easy to use for implementing chat, cooperation etc. 
-If you want to use it in multi node, you will find you cannot get the list of connected clients in a particular room (https://github.com/socketio/socket.io-redis/issues/13, https://github.com/socketio/socket.io-redis/pull/15)
+If you want to use it in multi node, you will find you cannot get the list of connected clients in a particular room ( https://github.com/socketio/socket.io-redis/issues/13 , https://github.com/socketio/socket.io-redis/pull/15 )
 
-Someday I got inspired on this project (https://github.com/rajaraodv/redispubsub). So I try to implement a library that is easy to use for someone need to use rooms of socket.io across node.
+Someday I got inspired on this project ( https://github.com/rajaraodv/redispubsub ). So I try to implement a library that is easy to use for someone need to use rooms of socket.io across node.
 
 ## Installation
 
@@ -15,6 +15,7 @@ npm install node-redis-room
 ## Usage
 
 ##### Server side #####
+
 
 ###### init ######
 ```javascript
