@@ -41,19 +41,19 @@ var redis = require('redis'),
 
 ###### join ######
 ```javascript
-//you still need socket.join for io.in(roomName).emit in every node
+//You still need to call socket.join for io.in(roomName).emit in every node. You can see the usage in the example
 nodeRedisRoom.join(roomName, nodeRedisRoomUser, function(err) {});
 ```
 
 ###### leave ######
 ```javascript
-//you still need socket.leave for io.in(roomName).emit in every node
+//You still need to call socket.leave for io.in(roomName).emit in every node. You can see the usage in the example
 nodeRedisRoom.leave(roomName, nodeRedisRoomUser, function(err) {});
 ```
 
 ###### broadcast ######
 ```javascript
-//I use cmd join here because I need to brocast to other users in example
+//the command that you need to brocast to other users
 nodeRedisRoom.broadcast(roomName, {
   cmd: 'join',
   content: nodeRedisRoomUser
@@ -72,7 +72,7 @@ nodeRedisRoom.broadcast(roomName, {
 
 ###### onDisconnect ######
 ```javascript
-  //need to call it on socket disconnect for clear this user data in redis
+  //need to call it when socket disconnect for clearing the user data in redis
   nodeRedisRoom.onDisconnect(nodeRedisRoomUser, function() {});
 ```
 
