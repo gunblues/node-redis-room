@@ -20,7 +20,7 @@ module.exports = function (socket) {
   var nodeRedisRoomUser = {
     id: user.id,
     connectionId: socket.id,
-    nickname: user.nick,
+    nick: user.nick,
     avatar: user.avatar
   };
  
@@ -106,6 +106,19 @@ module.exports = function (socket) {
     nodeRedisRoom.broadcast(data.roomName, {
       cmd: 'broadcast',
       content: data.message 
+    });
+
+  });
+
+  socket.on('getRoomMembers', function (data) {
+    debug("user getRoomMembers %o %o", user, data);
+ 
+    nodeRedisRoom.getRoomMembers(data.roomName, function(err, users) {
+      if (err) {
+        console.error('getRoomMembers failed', err);
+        return;
+      }
+      io.in(data.roomName).emit('getRoomMembers', users);
     });
 
   });

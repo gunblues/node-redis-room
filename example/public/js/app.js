@@ -30,10 +30,54 @@ var User = (function() {
     
 }());
 
+var me = User.get();
+
+var UIOperate = (function() {
+  var addUserToFriendList = function(user) {
+    var nick = user.nick;
+    if (user.id === me.id) {
+      nick = nick + ' (it\'s you)'; 
+    } 
+
+    $('.friend-list').append('<li><a href="#" class="clearfix"><img src="' + user.avatar + '" alt="" class="img-circle"><div class="friend-name"><strong>' + nick + '</strong></div></a></li>');
+  };
+
+  var send = function(text) {
+    var text = $('#send-text').val();      
+    if (text === '')
+      return;
+
+    $('#send-text').val('');
+
+    var message = {
+      user: me,
+      text: text
+    };
+
+    socketGo.broadcast(message);
+  };
+
+  var addChatToChatMessage = function(user, text) {
+    var direction = 'left';
+    if (user.id === me.id) {
+      direction = 'right';
+    }  
+
+    $('.chat').append('<li class="' + direction + ' clearfix"><span class="chat-img pull-' + direction + '"><img src="' + user.avatar + '" alt="User Avatar"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + user.nick + '</strong></div><p>' + text + '</p></div></li>');
+  };
+
+  return {
+    addUserToFriendList: addUserToFriendList ,
+    addChatToChatMessage: addChatToChatMessage,
+    send: send
+  };
+}());
+
 var socketGo = (function() {
 
+  var roomName = "node-redis-room-example";
   var options = {
-    query: 'user=' + encodeURIComponent(JSON.stringify(User.get())),
+    query: 'user=' + encodeURIComponent(JSON.stringify(me)),
     forceNew: true 
   };
 
@@ -43,12 +87,17 @@ var socketGo = (function() {
     console.log('got connected', socket.id);
     //join room
     socket.emit('join', {
-      roomName: "node-redis-room-example"
+      roomName: roomName
     });
   });
 
   socket.on('join', function (data) {
     console.log('got join', data);
+
+    if (data.id === me.id) {
+      UIOperate.addUserToFriendList(me);
+      getRoomMembers();
+    }
   });
 
   socket.on('leave', function (data) {
@@ -57,17 +106,53 @@ var socketGo = (function() {
 
   socket.on('broadcast', function (data) {
     console.log('got broadcast', data);
+
+    UIOperate.addChatToChatMessage(data.user, data.text);
   });
+
+  socket.on('getRoomMembers', function (data) {
+    console.log('got getRoomMembers', data);
+
+    $.each(data, function(id, member) {
+      if (member.id !== me.id) {
+        UIOperate.addUserToFriendList(member);
+      }
+    });
+  });
+
+  var broadcast = function(data) {
+    socket.emit('broadcast', {
+      roomName: roomName,
+      message: data 
+    });
+  };
+
+  var getRoomMembers = function() {
+    socket.emit('getRoomMembers', {
+      roomName: roomName
+    });
+  };
 
   var disconnect = function() {
     socket.emit('leave', {
-      roomName: "node-redis-room-example"
+      roomName: roomName
     });
     socket.disconnect();
   };
+
+  return {
+    broadcast: broadcast,
+    disconnect: disconnect
+  }
 
 }());
 
 $(window).unload(function() {
   socketGo.disconnect();
+});
+
+$(document).keypress(function(e) {
+  if(e.which == 13 && $('#send-text').is(":focus")) {
+    UIOperate.send();
+  }
 });

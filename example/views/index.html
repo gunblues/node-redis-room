@@ -1,4 +1,49 @@
-<script src="js/jquery-1.9.1.js"></script>
-<script src="js/socket.io-1.4.5.js"></script>
-<script src="js/app.js"></script>
-
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>node-redis-room-example</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/app.css">
+    </head>
+    <body>
+        <div class="container bootstrap snippet">
+            <div class="row">
+                <div class="col-md-4 bg-white ">
+                    <div class=" row border-bottom padding-sm" style="height: 40px;">
+                        Member
+                    </div>
+                    
+                    <!-- =============================================================== -->
+                    <!-- member list -->
+                    <ul class="friend-list">
+                    </ul>
+                </div>
+                
+                <!--=========================================================-->
+                <!-- selected chat -->
+                <div class="col-md-8 bg">
+                    <div class="chat-message">
+                        <ul class="chat">
+                        </ul>
+                    </div>
+                    <div class="chat-box bg-white">
+                        <div class="input-group">
+                            <input id="send-text" class="form-control border no-shadow no-rounded" placeholder="Type your message here">
+                            <span class="input-group-btn">
+                                <button onclick="UIOperate.send()" class="btn btn-success no-rounded" type="button">Send</button>
+                            </span>
+                        </div><!-- /input-group --> 
+                    </div>            
+                </div>        
+            </div>
+        </div>
+        <script src="js/jquery-1.9.1.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/socket.io-1.4.5.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+</html>
