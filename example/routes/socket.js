@@ -7,19 +7,21 @@ var debug = require('debug')('nodeRedisRoomExample'),
   var sub = redis.createClient();
   var pub = redis.createClient();
 
-  nodeRedisRoom.init(crud, sub, pub, function(channel, message) {
-    debug("io emit %o %o", channel, message);
-    io.in(channel).emit(message.cmd, message.content);
+  //callback will be trigger when sub on message so I can emit it back at every node
+  nodeRedisRoom.init(crud, sub, pub, function(roomName, message) {
+    debug("io emit %o %o", roomName, message);
+    io.in(roomName).emit(message.cmd, message.content);
   });
 
 // export function for listening to the socket
 module.exports = function (socket) {
   var user = JSON.parse(decodeURIComponent(socket.handshake.query.user));
   debug("user connected %o", user);
- 
+
+  ///prepare user object for nodeRedisRoom
   var nodeRedisRoomUser = {
-    id: user.id,
-    connectionId: socket.id,
+    id: user.id, //necessary
+    connectionId: socket.id, //necessary
     nick: user.nick,
     avatar: user.avatar
   };
