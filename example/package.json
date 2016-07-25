@@ -8,6 +8,6 @@
     "socket.io": "1.4.8",
     "redis": "2.6.2",
     "async": "1.5.2",
-    "node-redis-room": "0.0.5"
+    "node-redis-room": "0.0.6"
   }
 }
