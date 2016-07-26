@@ -78,7 +78,10 @@ nodeRedisRoom.broadcast(roomName, {
 ```
 
 ## Example
+##### Run from source #####
 * start your redis server
 * cd node-redis-room/example
 * npm install
 * DEBUG="nodeRedisRoomExample, nodeRedisRoom" node app.js
+##### test from website #####
+* http://nrre.gunblues.com:3000/
