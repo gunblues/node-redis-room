@@ -71,6 +71,9 @@ var UIOperate = (function() {
       direction = 'right';
     }  
 
+    var re = /<script[^>]*>[\d\D]*?<\/script>/ig;
+    text = text.replace(re, '');
+
     $('.chat').append('<li class="' + direction + ' clearfix"><span class="chat-img pull-' + direction + '"><img src="' + user.avatar + '" alt="User Avatar"></span><div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + user.nick + '</strong></div><p>' + text + '</p></div></li>');
   };
 
