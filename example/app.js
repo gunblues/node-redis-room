@@ -1,10 +1,15 @@
 var http = require('http'),
   express = require('express'),
   app = express(),
-  server = http.createServer(app);
-  io = require('socket.io').listen(server);
+  server = http.createServer(app),
+  io = require('socket.io').listen(server),
+  redis = require('socket.io-redis'),
   routes = require('./routes'),
   socket = require('./routes/socket.js');
+
+io.adapter(redis({ host: 'localhost', port: 6379 }));
+
+GLOBAL.io = io;
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');

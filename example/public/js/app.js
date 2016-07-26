@@ -34,6 +34,10 @@ var me = User.get();
 
 var UIOperate = (function() {
   var addUserToFriendList = function(user) {
+    if ($('#' + user.id).length != 0) {
+      return;
+    }
+
     var nick = user.nick;
     if (user.id === me.id) {
       nick = nick + ' (it\'s you)'; 
@@ -43,8 +47,7 @@ var UIOperate = (function() {
   };
 
   var removeUserFromFriendList = function(user) {
-    var id = '#' + user.id;
-    $(id).remove();
+    $('#' + user.id).remove();
   };
 
   var send = function(text) {
@@ -103,7 +106,10 @@ var socketGo = (function() {
     if (data.id === me.id) {
       UIOperate.addUserToFriendList(me);
       getRoomMembers();
+    } else {
+      UIOperate.addUserToFriendList(data);
     }
+
   });
 
   socket.on('leave', function (data) {
