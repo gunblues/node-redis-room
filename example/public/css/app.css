@@ -22,8 +22,8 @@ margin-left: -40px;
 
 .friend-list li a img {
   float: left;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   margin-right: 0px;
 }
 
@@ -72,10 +72,6 @@ small, .small {
   padding: 3px 5px;
 }
 
-.chat-message {
-  padding: 60px 20px 115px;
-}
-
 .chat {
     list-style: none;
     margin: 0;
@@ -86,8 +82,8 @@ small, .small {
 }
 
 .chat li img {
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   border-radius: 50em;
   -moz-border-radius: 50em;
   -webkit-border-radius: 50em;
@@ -102,7 +98,7 @@ img {
 }
 
 .chat li.left .chat-body {
-  margin-left: 70px;
+  margin-left: 45px;
   background-color: #fff;
 }
 
@@ -145,12 +141,12 @@ img {
 
 .chat li.right .chat-body:before {
   position: absolute;
-  top: 10px;
+  top: 5px;
   right: -8px;
   display: inline-block;
   background: #fff;
-  width: 16px;
-  height: 16px;
+  width: 6px;
+  height: 6px;
   border-top: 1px solid #f1f5fc;
   border-right: 1px solid #f1f5fc;
   content: '';
@@ -162,20 +158,19 @@ img {
 }
 
 .chat li {
-  margin: 15px 0;
+  margin: 5px 0;
 }
 
 .chat li.right .chat-body {
-  margin-right: 70px;
+  margin-right: 45px;
   background-color: #fff;
 }
 
 .chat-box {
   position: fixed;
   bottom: 0;
-  left: 444px;
   right: 0;
-  padding: 15px;
+  padding: 5px;
   border-top: 1px solid #eee;
   transition: all .5s ease;
   -webkit-transition: all .5s ease;
