@@ -98,7 +98,7 @@ var socketGo = (function() {
     forceNew: true 
   };
 
-  var socket = io.connect('http://localhost:3000', options);
+  var socket = io.connect(document.location.href, options);
 
   socket.on('connect', function () {
     console.log('got connected', socket.id);
