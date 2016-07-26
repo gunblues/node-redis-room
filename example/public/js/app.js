@@ -39,7 +39,12 @@ var UIOperate = (function() {
       nick = nick + ' (it\'s you)'; 
     } 
 
-    $('.friend-list').append('<li><a href="#" class="clearfix"><img src="' + user.avatar + '" alt="" class="img-circle"><div class="friend-name"><strong>' + nick + '</strong></div></a></li>');
+    $('.friend-list').append('<li id="' + user.id + '"><a href="#" class="clearfix"><img src="' + user.avatar + '" alt="" class="img-circle"><div class="friend-name"><strong>' + nick + '</strong></div></a></li>');
+  };
+
+  var removeUserFromFriendList = function(user) {
+    var id = '#' + user.id;
+    $(id).remove();
   };
 
   var send = function(text) {
@@ -69,6 +74,7 @@ var UIOperate = (function() {
   return {
     addUserToFriendList: addUserToFriendList ,
     addChatToChatMessage: addChatToChatMessage,
+    removeUserFromFriendList: removeUserFromFriendList,
     send: send
   };
 }());
@@ -102,6 +108,8 @@ var socketGo = (function() {
 
   socket.on('leave', function (data) {
     console.log('got leave', data);
+      
+    UIOperate.removeUserFromFriendList(data);
   });
 
   socket.on('broadcast', function (data) {
