@@ -1,14 +1,17 @@
 {
   "name": "node-redis-room-example",
   "version": "0.0.2",
-  "private": true,
+  "description": "Example of node-redis-room",
+  "main": "app.js",
   "dependencies": {
     "ejs": "2.4.2",
     "express": "4.14.0",
     "socket.io": "1.4.8",
     "redis": "2.6.2",
     "async": "1.5.2",
-    "node-redis-room": "0.0.8",
+    "node-redis-room": "0.0.9",
     "socket.io-redis": "1.0.0"
-  }
+  },
+  "author": "Gunblues <hsiao.powen@gmail.com> (http://gunblues.com)",
+  "license": "MIT"
 }
