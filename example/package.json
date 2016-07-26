@@ -1,6 +1,7 @@
 {
   "name": "node-redis-room-example",
   "version": "0.0.5",
+  "private": true,
   "description": "Example of node-redis-room",
   "main": "app.js",
   "dependencies": {
