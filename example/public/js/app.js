@@ -141,6 +141,12 @@ var socketGo = (function() {
     });
   };
 
+  var leave = function() {
+    socket.emit('leave', {
+      roomName: roomName
+    });
+  };
+
   var getRoomMembers = function() {
     socket.emit('getRoomMembers', {
       roomName: roomName
@@ -148,14 +154,13 @@ var socketGo = (function() {
   };
 
   var disconnect = function() {
-    socket.emit('leave', {
-      roomName: roomName
-    });
+    leave();
     socket.disconnect();
   };
 
   return {
     broadcast: broadcast,
+    leave: leave,
     disconnect: disconnect
   }
 
