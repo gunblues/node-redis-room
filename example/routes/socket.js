@@ -120,7 +120,7 @@ module.exports = function (socket) {
         console.error('getRoomMembers failed', err);
         return;
       }
-      io.in(data.roomName).emit('getRoomMembers', users);
+      io.to(socket.id).emit('getRoomMembers', users);
     });
 
   });
