@@ -10,7 +10,7 @@
     "socket.io": "1.4.8",
     "redis": "2.6.2",
     "async": "1.5.2",
-    "node-redis-room": "0.0.13",
+    "node-redis-room": "0.0.14",
     "socket.io-redis": "1.0.0"
   },
   "author": "Gunblues <hsiao.powen@gmail.com> (http://gunblues.com)",
