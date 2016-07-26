@@ -41,9 +41,11 @@ var UIOperate = (function() {
     var nick = user.nick;
     if (user.id === me.id) {
       nick = nick + ' (it\'s you)'; 
-    } 
+      $('.friend-list').append('<li id="userOfMe"><a href="#" class="clearfix"><img src="' + user.avatar + '" alt="" class="img-circle"><div class="friend-name"><strong>' + nick + '</strong></div></a></li>');
+    } else {
+      $('#userOfMe').after('<li id="' + user.id + '"><a href="#" class="clearfix"><img src="' + user.avatar + '" alt="" class="img-circle"><div class="friend-name"><strong>' + nick + '</strong></div></a></li>');
+    }
 
-    $('.friend-list').append('<li id="' + user.id + '"><a href="#" class="clearfix"><img src="' + user.avatar + '" alt="" class="img-circle"><div class="friend-name"><strong>' + nick + '</strong></div></a></li>');
   };
 
   var removeUserFromFriendList = function(user) {
@@ -69,7 +71,10 @@ var UIOperate = (function() {
     var direction = 'left';
     if (user.id === me.id) {
       direction = 'right';
-    }  
+    } else {
+      $('#' + user.id).remove();
+      $('#userOfMe').after('<li id="' + user.id + '"><a href="#" class="clearfix"><img src="' + user.avatar + '" alt="" class="img-circle"><div class="friend-name"><strong>' + user.nick + '</strong></div></a></li>');
+    }
 
     var re = /<script[^>]*>[\d\D]*?<\/script>/ig;
     text = text.replace(re, '');
