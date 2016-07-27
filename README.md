@@ -26,12 +26,9 @@ var redis = require('redis'),
   var sub = redis.createClient();
   var pub = redis.createClient();
 
-  //callback will be trigger when sub on message so I can emit it back at every node
-  nodeRedisRoom.init(crud, sub, pub, function(roomName, message) {
-    io.in(roomName).emit(message.cmd, message.content);
-  });
+  nodeRedisRoom.init(io, crud, sub, pub);
   
-  //prepare user object for nodeRedisRoom
+  //prepare user object for nodeRedisRoom when socket onconnect
   var nodeRedisRoomUser = {
     id: user.id, //necessary
     connectionId: socket.id, //necessary
@@ -42,14 +39,12 @@ var redis = require('redis'),
 
 ###### join ######
 ```javascript
-//You still need to call socket.join for io.in(roomName).emit in every node. You can see the usage in the example
-nodeRedisRoom.join(roomName, nodeRedisRoomUser, function(err) {});
+nodeRedisRoom.join(socket, roomName, nodeRedisRoomUser, function(err) {});
 ```
 
 ###### leave ######
 ```javascript
-//You still need to call socket.leave for io.in(roomName).emit in every node. You can see the usage in the example
-nodeRedisRoom.leave(roomName, nodeRedisRoomUser, function(err) {});
+nodeRedisRoom.leave(socket, roomName, nodeRedisRoomUser, function(err) {});
 ```
 
 ###### broadcast ######

@@ -3,13 +3,22 @@ var http = require('http'),
   app = express(),
   server = http.createServer(app),
   io = require('socket.io').listen(server),
-  redis = require('socket.io-redis'),
+  redis = require('redis'),
+  socketioRedis = require('socket.io-redis'),
   routes = require('./routes'),
-  socket = require('./routes/socket.js');
+  socket = require('./routes/socket.js'),
+  nodeRedisRoom = require('node-redis-room');
 
-io.adapter(redis({ host: 'localhost', port: 6379 }));
+io.adapter(socketioRedis({ host: 'localhost', port: 6379 }));
+
+var crud = redis.createClient();
+var sub = redis.createClient();
+var pub = redis.createClient();
+
+nodeRedisRoom.init(io, crud, sub, pub);
 
 GLOBAL.io = io;
+GLOBAL.nodeRedisRoom = nodeRedisRoom;
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');

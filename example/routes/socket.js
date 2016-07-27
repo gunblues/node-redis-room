@@ -1,17 +1,5 @@
 var debug = require('debug')('nodeRedisRoomExample'),
-  async = require('async'),
-  redis = require('redis'),
-  nodeRedisRoom = require('node-redis-room');
-
-  var crud = redis.createClient();
-  var sub = redis.createClient();
-  var pub = redis.createClient();
-
-  //callback will be trigger when sub on message so I can emit it back at every node
-  nodeRedisRoom.init(crud, sub, pub, function(roomName, message) {
-    debug("io emit %o %o", roomName, message);
-    io.in(roomName).emit(message.cmd, message.content);
-  });
+  async = require('async');
 
 // export function for listening to the socket
 module.exports = function (socket) {
@@ -30,18 +18,8 @@ module.exports = function (socket) {
     debug("user join %o %o", user, data);
   
     async.auto({
-      socket_join: function (cb) {
-        socket.join(data.roomName, function (err) {
-          if (err) {
-            cb(err);
-          } else {
-            debug("user socket.join success %o", user, data);
-            cb();
-          }
-        });
-      },  
-      redisRoom: ['socket_join', function(cb, results) {
-        nodeRedisRoom.join(data.roomName, nodeRedisRoomUser, function(err) {
+      redisRoom: function(cb, results) {
+        nodeRedisRoom.join(socket, data.roomName, nodeRedisRoomUser, function(err) {
           if (err) {
             cb(err);
           } else {
@@ -49,7 +27,7 @@ module.exports = function (socket) {
             cb();
           }
         });  
-      }],
+      },
       broadcast: ['redisRoom', function(cb, results) {
         nodeRedisRoom.broadcast(data.roomName, {
           cmd: 'join',
@@ -68,18 +46,8 @@ module.exports = function (socket) {
     debug("user leave %o %o", user, data);
   
     async.auto({
-      socket_leave: function (cb) {
-        socket.leave(data.roomName, function (err) {
-          if (err) {
-            cb(err);
-          } else {
-            debug("user socket.leave success %o", user, data);
-            cb();
-          }
-        });
-      },  
-      redisRoom: ['socket_leave', function(cb, results) {
-        nodeRedisRoom.leave(data.roomName, nodeRedisRoomUser, function(err) {
+      redisRoom: function(cb, results) {
+        nodeRedisRoom.leave(socket, data.roomName, nodeRedisRoomUser, function(err) {
           if (err) {
             cb(err);
           } else {
@@ -87,7 +55,7 @@ module.exports = function (socket) {
             cb();
           }
         });  
-      }],
+      },
       broadcast: ['redisRoom', function(cb, results) {
         nodeRedisRoom.broadcast(data.roomName, {
           cmd: 'leave',
