@@ -27,14 +27,17 @@ var redis = require('redis'),
   var pub = redis.createClient();
 
   nodeRedisRoom.init(io, crud, sub, pub);
-  
-  //prepare user object for nodeRedisRoom when socket onconnect
-  var nodeRedisRoomUser = {
-    id: user.id, //necessary
-    connectionId: socket.id, //necessary
-    nick: user.nick,
-    avatar: user.avatar
-  };  
+```
+
+###### prepare ######  
+```javascript
+//prepare user object for nodeRedisRoom when socket onconnect
+var nodeRedisRoomUser = {
+  id: user.id, //necessary
+  connectionId: socket.id, //necessary
+  nick: user.nick,
+  avatar: user.avatar
+};  
 ```
 
 ###### join ######
