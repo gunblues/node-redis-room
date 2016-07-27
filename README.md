@@ -63,7 +63,7 @@ nodeRedisRoom.broadcast(roomName, {
 
 ###### getUserHaveJoinedRooms ######
 ```javascript
-  nodeRedisRoom.getUserHaveJoinedRooms(socket.id, function(err, rooms) {});
+  nodeRedisRoom.getUserHaveJoinedRooms(connectionId, function(err, rooms) {});
 ```
 
 ###### onDisconnect ######
