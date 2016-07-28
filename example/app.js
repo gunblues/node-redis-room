@@ -2,7 +2,10 @@ var http = require('http'),
   express = require('express'),
   app = express(),
   server = http.createServer(app),
-  io = require('socket.io').listen(server),
+  io = require('socket.io').listen(server, {
+    pingTimeout: 60000,
+    pingInterval: 10000
+  }),
   redis = require('redis'),
   socketioRedis = require('socket.io-redis'),
   routes = require('./routes'),
