@@ -18,6 +18,7 @@ npm install node-redis-room
 
 
 ###### init ######
+//do not init at socket onconnect event
 ```javascript
 var redis = require('redis'),
   nodeRedisRoom = require('node-redis-room');
@@ -31,7 +32,7 @@ var redis = require('redis'),
 
 ###### preapre ######
 ```javascript
-//prepare user object for nodeRedisRoom when socket onconnect
+//prepare user object for nodeRedisRoom at socket onconnect event
 var nodeRedisRoomUser = {
   id: user.id, //necessary
   connectionId: socket.id, //necessary
