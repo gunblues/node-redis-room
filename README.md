@@ -18,8 +18,8 @@ npm install node-redis-room
 
 
 ###### init ######
-//do not init at socket onconnect event
 ```javascript
+//do not init at socket onconnect event
 var redis = require('redis'),
   nodeRedisRoom = require('node-redis-room');
   
